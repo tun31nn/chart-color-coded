@@ -1,0 +1,36 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: ldbl/helm-concourse-gcp
+    tag: v2.8.2-helm
+
+inputs:
+- name: chart-color-coded
+- name: color-coded-version
+outputs:
+- name: helm-repo
+
+params:
+  chart_name: color-coded
+  bucket: ""
+
+run:
+  path: bash
+  args:
+  - -exc
+  - |
+    if [[ -z "$bucket" ]];then
+      echo "Bucket name not set"
+      exit 1
+    fi
+    mkdir -p helm-repo
+    helm init --client-only
+    VERSION=$(cd chart-color-coded && git tag -l --points-at HEAD | tail -n1)
+    APPVERSION=$(cat color-coded-version/version)
+    cp -a chart-color-coded $chart_name
+    helm package $chart_name -d helm-repo --version $VERSION --app-version $APPVERSION
+    helm gcs push helm-repo/$chart_name-$VERSION.tgz gs://$bucket
+
