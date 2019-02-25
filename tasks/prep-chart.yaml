@@ -16,6 +16,7 @@ outputs:
 params:
   chart_name: color-coded
   bucket: ""
+  json_key: ""
 
 run:
   path: bash
