@@ -27,7 +27,9 @@ run:
       echo "Bucket name not set"
       exit 1
     fi
+    set +x
     echo $json_key > /root/.json_key
+    set -x
     gcloud auth activate-service-account --key-file=/root/.json_key
     mkdir -p helm-repo
     helm init --client-only
