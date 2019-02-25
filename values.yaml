@@ -9,6 +9,8 @@ image:
   #tag: stable
   pullPolicy: Always
 
+imagePullSecret: ""
+
 nameOverride: ""
 fullnameOverride: ""
 
