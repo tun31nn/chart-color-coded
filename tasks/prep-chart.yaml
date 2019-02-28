@@ -4,8 +4,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: ldbl/helm-concourse-gcp
-    tag: v2.8.2-helm
+    repository: tun31nn/helm-concourse-gcp
+    tag: v2.12.2-helm
 
 inputs:
 - name: chart-color-coded
